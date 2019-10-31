@@ -5,7 +5,10 @@ import copy
 from datetime import datetime as dt
 
 class nvdashboard2:
-    def __init__(self,conf):
+    def __init__(self,conf={}):
+        if len(conf) == 0:
+            print(' conf is empty ')
+            return
         # 属性としては、conf,status,result,pers,error_msg,items
         # インスタンス化するときに、conf を読み込む
         self.conf = conf
