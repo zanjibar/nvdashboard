@@ -6,17 +6,19 @@ from datetime import datetime as dt
 
 class nvdashboard2:
     def __init__(self,conf={}):
+        
+        # インスタンス化された時の情報の取得
+        self.status= {}
+        self.status['cwd'] = os.getcwd()
+        self.status['platform'] = sys.platform
+        self.status['start'] = dt.now()
+
         if len(conf) == 0:
             print(' conf is empty ')
             return
         # 属性としては、conf,status,result,pers,error_msg,items
         # インスタンス化するときに、conf を読み込む
         self.conf = conf
-        # インスタンス化された時の情報の取得
-        self.status= {}
-        self.status['cwd'] = os.getcwd()
-        self.status['platform'] = sys.platform
-        self.status['start'] = dt.now()
 
         # 戻り値を保持するところ,実行ごとの戻りを保持するところ
         # 複数の実行を保持したい場合は、self.pers に保持する
