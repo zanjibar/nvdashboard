@@ -92,22 +92,6 @@ class nvdashboard2:
         items = set_common(self.conf['commons'],items)
 
         
-        # 追加(additional 略して add)の情報読み込みがあったら読み込む
-        # ファイルパスは、カレントパス config/名前/add/ 以下
-        # 拡張子 .yml は、
-        def set_add(i):
-            if type(i) == dict :
-                for k in i.keys():
-                    # xxx_add_xxx は、辞書形式で、ひとつだけの場合　複数個ある場合には、ループになる
-                    if type(i[k])==dict and len(i[k])==1 and list(i[k].keys())[0]=='xxx_add_xxx':
-                        i[k] = copy.deepcopy(yaml.load(codecs.open(os.getcwd() + '/' + i[k]['xxx_add_xxx'] + '.yml', 'r', 'utf-8')))
-                    if type(i[k])==dict and len(i[k]) > 0:
-                        i[k] = set_add(i[k])
-                return(i)
-            else:
-                return(i)
-
-        items = set_add(items)
                                                                               
                                                                               
         #未定義の項目が全体(global)にあったら設定
