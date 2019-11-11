@@ -7,39 +7,45 @@ from datetime import datetime as dt
 class nvdashboard2:
     def __init__(self,conf={}):
         
-        # インスタンス化された時の情報の取得
+        # Information to be acquired when initialized
         self.status= {}
         self.status['cwd'] = os.getcwd()
         self.status['platform'] = sys.platform
         self.status['start'] = dt.now()
-
+        
+        # Read conf when instantiating  
         if len(conf) == 0:
             print(' conf is empty ')
             return
-        # 属性としては、conf,status,result,pers,error_msg,items
-        # インスタンス化するときに、conf を読み込む
         self.conf = conf
 
-        # 戻り値を保持するところ,実行ごとの戻りを保持するところ
-        # 複数の実行を保持したい場合は、self.pers に保持する
+        # Default member variable name: conf,status,result,pers,error_msg,items 
+
+        # Save value with each run
+
         self.result = {}
         
-        # インスタンス化されてから継続的に保持される情報
+        # Use pers if you want to save the value across executions
         self.pers = {}
         
-        # error_msg リスト
+        # error_msg 
         self.error_msg = []
-        
+
+        # date time when instantiating
         print(self.status['start'].strftime('%Y-%m-%d %H:%M:%S'))
 
-    # リスト内包に正規表現を適用する単なる便利なツール
-    # do から呼び出す対象ではない
+    # Useful function for List comprehension 
     def re(self,tg,xlist):
         return([x for x in xlist if re.search(tg,x)])
     
     # sleep 
-    def sleep(self,args):
-        time.sleep(int(args[0]))
+    def sleep(self,args=[]):
+        if len(args) == 0:
+            time.sleep(1)
+        else:
+            time.sleep(int(args[0]))
+
+            
 
     # 項目(items) を 設定する
     def set_items(self,noun="",verb="",override = {}):
@@ -91,8 +97,6 @@ class nvdashboard2:
                 
         items = set_common(self.conf['commons'],items)
 
-        
-                                                                              
                                                                               
         #未定義の項目が全体(global)にあったら設定
         for k in self.conf['global']:
@@ -155,11 +159,8 @@ class nvdashboard2:
             return True
         else:
             print()
-            print('３つめの引数　do_flag が真偽でないか、偽なので、スクリプトは実行しません。')
-            print('スクリプトで使う項目(items)は下記です。')
-            print(self.items)
-            print()
-            print()
+            print(' dry run ')
+            print(' ds.items  ')
             print()
             return True
         
